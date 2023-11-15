@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Link Destination Differences</title>
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.signalwerk.ch" />
+    <link
+      href="https://fonts.signalwerk.ch/css/latest/family=Open+Sans:ital,wght@0,300..800;1,300..800.css"
+      rel="stylesheet"
+    />
+    <!-- styles -->
+    <link
+      rel="stylesheet"
+      href="https://rawcdn.githack.com/signalwerk/signalwerk.styles/6cf7268/styles/doc.critical.css"
+      media="all"
+    />
+    <link
+      rel="preload"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+      href="https://rawcdn.githack.com/signalwerk/signalwerk.styles/6cf7268/styles/doc.rest.css"
+      media="all"
+    />
+  </head>
+  <body>
+    <main>
+      <article class="document">
+        <header class="header">
+          <div class="header__inner">
+            <h1 class="header__title">
+              Security Assessment for Links with Cross-Origin Destinations
+            </h1>
+            <p class="header__subline"></p>
+            <p class="header__info">Stefan Huber · November 15, 2023</p>
+          </div>
+        </header>
+
+        <div class="document__item">
+          <p>
+            This page demonstrates the behavior of different link types when
+            opened in a new tab.
+          </p>
+          <h3>Regular Link</h3>
+          <p>
+            <a href="./destination.html" target="_blank">This link</a> opens in
+            a new tab without any specific <code>rel</code> attribute. It allows
+            on old Browsers the new page to access the
+            <code>window.opener</code> property, potentially leading to security
+            vulnerabilities. Affected Browsers:
+          </p>
+          <ul>
+            <li>Chrome/Edge &lt; 88</li>
+            <li>Firefox &lt; 79</li>
+            <li>Safari &lt; 12.1</li>
+            <li>Safari iOS &lt; 12.2</li>
+          </ul>
+          <p class="small">
+            Source for Browser compatibility information:
+            <a
+              href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#browser_compatibility"
+              >MDN Web Docs – The Anchor element</a
+            >
+          </p>
+          <h3>Link with <code>rel="noopener"</code></h3>
+          <p>
+            <a href="./destination.html" target="_blank" rel="noopener"
+              >This link</a
+            >
+            uses the <code>rel="noopener"</code> attribute, which opens the link
+            in a new tab while ensuring the new page cannot access the
+            <code>window.opener</code>
+            property. This enhances security.
+          </p>
+          <h3>Link with <code>rel="noreferrer"</code></h3>
+          <p>
+            <a href="./destination.html" target="_blank" rel="noreferrer"
+              >This link</a
+            >
+            uses the <code>rel="noreferrer"</code> attribute, which has the same
+            effect as <code>rel="noopener"</code> and additionally prevents the
+            browser from sending the HTTP <code>referrer</code> header to the
+            new page. This enhances both security and privacy.
+          </p>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Destination Page</title>
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.signalwerk.ch" />
+    <link
+      href="https://fonts.signalwerk.ch/css/latest/family=Open+Sans:ital,wght@0,300..800;1,300..800.css"
+      rel="stylesheet"
+    />
+    <!-- styles -->
+    <link
+      rel="stylesheet"
+      href="https://rawcdn.githack.com/signalwerk/signalwerk.styles/6cf7268/styles/doc.critical.css"
+      media="all"
+    />
+    <link
+      rel="preload"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+      href="https://rawcdn.githack.com/signalwerk/signalwerk.styles/6cf7268/styles/doc.rest.css"
+      media="all"
+    />
+    <script>
+      window.onload = function () {
+        var openerStatus = document.getElementById("openerStatus");
+        var referrerStatus = document.getElementById("referrerStatus");
+
+        // Check if window.opener is available
+        if (window.opener != null) {
+          openerStatus.innerHTML =
+            '<p><code>window.opener</code> is available.</p><p>This means the source page did not use <code>rel="noopener"</code> or <code>rel="noreferrer"</code>. The destination page can potentially control the source page.</p>';
+        } else {
+          openerStatus.innerHTML =
+            '<p><code>window.opener</code> is not available.</p><p>This means the source page used <code>rel="noopener"</code> or <code>rel="noreferrer"</code>, enhancing security by preventing this page from accessing the source page.</p>';
+        }
+
+        // Check for referrer
+        var referrer = document.referrer;
+        if (referrer) {
+          referrerStatus.innerHTML =
+            "<p>Referrer is available: " +
+            referrer +
+            '.</p><p>The source page did not use <code>rel="noreferrer"</code>, so the referrer information is passed to this page.</p>';
+        } else {
+          referrerStatus.innerHTML =
+            '<p>No referrer information available.</p><p>This likely means the source page used <code>rel="noreferrer"</code>, enhancing privacy by not sending the referrer URL to this page.</p>';
+        }
+      };
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <article class="document">
+        <header class="header">
+          <div class="header__inner">
+            <h1 class="header__title">Destination Page Analysis</h1>
+            <p class="header__subline"></p>
+            <p class="header__info">Stefan Huber · November 15, 2023</p>
+          </div>
+        </header>
+        <div class="document__item">
+          <h3>Status <code>window.opener</code></h3>
+          <p>
+            <span id="openerStatus"></span>
+          </p>
+          <h3>Status Referrer</h3>
+          <p>
+            <span id="referrerStatus"></span>
+          </p>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>
